@@ -128,3 +128,12 @@ eval $(./opam env --root=$PWD/opamroot)
   #+begin_src bash
 ./opam install -y ocaml.4.11.2 ocamlbuild cryptokit zmq sexplib ppx_sexp_conv ppx_deriving getopt
   #+end_src
+
+  
+* [0/4] Work to be done
+
+  - [ ] Ask the user for the list of the packages to be installed
+  - [ ] Parse the output of ~opam install --dryrun~ to get the
+    complete list of packages
+  - [ ] Include everything into a single script for packaging
+  - [ ] Produce also a deploy script
