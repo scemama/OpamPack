@@ -1,0 +1,130 @@
+#+TITLE: Opam export
+
+
+* Download OPAM
+
+  Download the OPAM installer
+  #+begin_src bash
+wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
+  #+end_src
+
+  Download the binary of the latest version of OPAM
+  #+begin_src bash
+sh install.sh --download-only
+chmod +x opam-2.1.4-x86_64-linux
+mv opam-2.1.4-x86_64-linux opam
+  #+end_src
+  
+* Create a custom repository with the minimal amount of packages
+
+  Clone the original repository locally
+  #+begin_src bash
+git clone https://github.com/ocaml/opam-repository.git --depth=1
+  #+end_src
+
+  Here is the list of necessary packages:
+  #+begin_src bash
+PACKAGES="
+base-unix
+ocaml-base-compiler
+conf-pkg-config
+conf-gmp
+base-bigarray
+base-threads
+ocaml-config
+conf-zmq
+conf-zlib
+conf-gmp-powm-sec
+ocaml
+ocamlfind
+ocamlbuild
+dune
+zarith
+num
+getopt
+stdlib-shims
+stdint
+sexplib0
+result
+ppx_derivers
+ocaml-compiler-libs
+csexp
+cppo
+ppxlib
+dune-configurator
+ppx_deriving
+zmq
+cryptokit
+base
+ppx_sexp_conv
+parsexp
+sexplib
+"
+  #+end_src
+
+  In the repository, keep only the required packages:
+  #+begin_src bash
+cd opam-repository
+mv packages packages_old
+mkdir packages
+for p in $PACKAGES ; do
+  mv packages_old/$p packages
+done
+  #+end_src
+
+  Remove unnecessary packages and git files
+  #+begin_src 
+rm -rf packages_old
+rm -rf .git
+cd ..
+  #+end_src
+
+* Create the dummy directory
+
+  Create an empty directory that will contain the opam files
+  #+begin_src bash
+mkdir opamroot
+  #+end_src
+
+  Set it as the default OPAM root directory
+  #+begin_src bash
+export OPAMROOT=$PWD/opamroot
+  #+end_src
+
+  Initialize it as an Opam repository, without creating a switch to
+  prevent the installation of an OCaml compiler.
+  #+begin_src bash
+./opam init --bare --disable-sandboxing --disable-shell-hook --root=$PWD/opamroot $PWD/opam-repository
+eval $(./opam env)
+  #+end_src
+
+  Create an empty switch named =qp2=
+  #+begin_src bash
+./opam switch create --empty qp2
+eval $(./opam env --switch=qp2)
+  #+end_src
+
+  Download all the required packages for the installation
+  #+begin_src bash
+./opam install --download-only ocaml.4.11.2 ocamlbuild cryptokit zmq sexplib ppx_sexp_conv ppx_deriving getopt
+  #+end_src
+
+  Make a tar.gz of all the needed files for exporting OPAM
+  #+begin_src bash
+tar -zcvf qp_opam.tar.gz opam opamroot
+  #+end_src
+
+* On the new host
+
+  Move the =qp_opam.tar.gz= to the new machine. Untar it and set it as
+  the new ~OPAMROOT~:
+  #+begin_src bash
+tar -zxvf qp_opam.tar.gz
+export OPAMROOT=$PWD/opamroot
+eval $(./opam env --root=$PWD/opamroot)
+  #+end_src
+
+  Install packages
+  #+begin_src bash
+./opam install -y ocaml.4.11.2 ocamlbuild cryptokit zmq sexplib ppx_sexp_conv ppx_deriving getopt
+  #+end_src

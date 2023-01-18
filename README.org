@@ -1,0 +1,7 @@
+#+TITLE: OpamPack
+
+OpamPack is a shell script that creates a ~tar.gz~ file containing all
+the dependencies of a project, enabling the installation of a minimal
+OCaml environment on a machine that doesn't have access to the internet.
+
+Notes are available [[here][Notes.org]]
