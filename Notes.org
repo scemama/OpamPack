@@ -1,4 +1,4 @@
-#+TITLE: Opam export
+#+TITLE: OpamPack
 #+PROPERTY: header-args :tangle OpamPack.sh
 
 * Initialization
