@@ -1,5 +1,5 @@
 #+TITLE: OpamPack
-#+PROPERTY: header-args :tangle OpamPack.sh
+#+PROPERTY: header-args :tangle OpamPack.sh :comments org
 
 * Initialization
 
