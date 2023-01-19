@@ -5,3 +5,41 @@ the dependencies of a project, enabling the installation of a minimal
 OCaml environment on a machine that doesn't have access to the internet.
 
 Notes are available [[Notes.org][here]]
+
+* Example
+
+  On the machine connected to the internet, run:
+
+  #+begin_src bash
+./OpamPack.sh ocaml.4.11.2 ocamlbuild cryptokit zmq sexplib ppx_sexp_conv ppx_deriving getopt
+  #+end_src
+
+  Don't forget to include the =ocaml= package with the version of the
+  compiler you want.
+
+  In the =_build= directory, you will find a file named
+  =opampack.tar.gz= containing all you need to install OPAM, OCaml and
+  the dependencies you specified in the command line without any
+  network access.
+
+  Copy the =opampack.tar.gz= file to the machine that doesn't have
+  internet access, and extract the file:
+
+  #+begin_src 
+tar -zxvf opampack.tar.gz
+  #+end_src
+
+  And run the install script in the opampack directory:
+
+  #+begin_src 
+cd opampack
+./install.sh
+  #+end_src
+
+  Before using OCaml, you will need to execute:
+
+  #+begin_src bash :tangle no
+export OPAMROOT=/path/to/opampack/opamroot
+eval $(/path/to/opampack/opam env --root=$OPAMROOT)
+  #+end_src
+
