@@ -11,7 +11,6 @@ cd _build/opampack
 # Get the list of packages from the command-line
 
 OPAM_PACK=$0
-shift
 USER_PACKAGES=$@
 if [[ -z $USER_PACKAGES ]] ; then
     echo "Error: $OPAM_PACK [PACKAGE] ..."
