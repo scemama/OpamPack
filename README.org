@@ -11,7 +11,7 @@ Notes describing in detail what it does internally are available [[Notes.org][he
   On the machine connected to the internet, run:
 
   #+begin_src bash
-./OpamPack.sh ocaml.4.11.2 ocamlbuild cryptokit zmq sexplib ppx_sexp_conv ppx_deriving getopt
+./OpamPack.sh ocaml.4.12.0 ocamlbuild zarith zmq sexplib ppx_sexp_conv ppx_deriving getopt
   #+end_src
 
   Don't forget to include the =ocaml= package with the version of the
