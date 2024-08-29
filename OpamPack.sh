@@ -79,7 +79,7 @@ eval $(./opam env --switch=opampack)
 
 PACKAGES=$(echo n \
                | ./opam install --dry-run $USER_PACKAGES \
-               | awk '/install/ { print $3 }' \
+               | awk '/- install/ { print $3 }' \
         )
 
 

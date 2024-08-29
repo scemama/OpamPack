@@ -18,7 +18,7 @@ if [[ -z $USER_PACKAGES ]] ; then
     exit -1
 fi
 
-set -e # IN what follows, fail when an error is encountered
+set -e # In what follows, fail when an error is encountered
   #+end_src
 
   Find the extended list of packages
